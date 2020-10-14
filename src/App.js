@@ -1,24 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react";
-import axios from "axios";
+import WeatherService from '../src/services/currentWeather';
 
 function App() {
   const [location, setLocation] = useState(false);
   const [weather, setWeather] = useState(false);
 
-  let getWeather = async (lat, long) => {
-    let response = await axios.get(
-      "https://api.openweathermap.org/data/2.5/weather",
-      {
-        params: {
-          lat: lat,
-          lon: long,
-          appid: process.env.REACT_APP_OPEN_WEATHER_KEY,
-          lang: "en",
-          units: "metric",
-        },
-      }
-    );
-
+  const getWeather = async (lat, long) => {
+    const response = await WeatherService.index(lat, long);
     setWeather(response.data);
   };
 
